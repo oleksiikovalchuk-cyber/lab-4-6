@@ -1,34 +1,28 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-// Переконайся, що у тебе є картинка за цим шляхом
 import logoImg from '@/assets/Vector.png';
 
 const router = useRouter();
-
-// Поля форми
 const username = ref('');
 const password = ref('');
 const email = ref('');
 
-// Об'єкт для помилок
+
 const errors = ref({
   username: '',
   email: '',
   password: ''
 });
 
-// Функція перевірки email
 const isValidEmail = (email: string) => {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 };
 
-// Валідація (Українською)
 const validateForm = () => {
   let isValid = true;
   errors.value = { username: '', email: '', password: '' };
 
-  // 1. Ім'я
   if (!username.value.trim()) {
     errors.value.username = "Введіть ім'я користувача";
     isValid = false;
@@ -37,7 +31,6 @@ const validateForm = () => {
     isValid = false;
   }
 
-  // 2. Email
   if (!email.value.trim()) {
     errors.value.email = "Введіть Email";
     isValid = false;
@@ -46,7 +39,6 @@ const validateForm = () => {
     isValid = false;
   }
 
-  // 3. Пароль
   if (!password.value) {
     errors.value.password = "Введіть пароль";
     isValid = false;
@@ -66,8 +58,6 @@ const handleRegister = () => {
     console.log('Password:', password.value);
     console.groupEnd();
     
-    // Тут можна додати логіку відправки на бекенд
-    // router.push('/login');
   } else {
     console.log('❌ Validation Failed');
   }
@@ -79,11 +69,7 @@ const goToLogin = () => {
 </script>
 
 <template>
-  <!-- 
-    ГОЛОВНИЙ КОНТЕЙНЕР (Адаптивний):
-    - h-[100dvh]: фіксує висоту на весь екран мобільного.
-    - md:flex: центрує картку на комп'ютері.
-  -->
+
   <div class="h-[100dvh] w-full bg-[#eaeaea] font-['Lato'] overflow-hidden block md:flex md:items-center md:justify-center md:p-4 supports-[height:100dvh]:h-[100dvh]">
 
     <main
@@ -101,9 +87,9 @@ const goToLogin = () => {
           </h1>
         </div>
 
-        <!-- Таби (Кнопки зверху) -->
+
         <div class="flex gap-[20px] shrink-0">
-          <!-- Кнопка Login (Веде назад, прозора) -->
+
           <button
             @click="goToLogin"
             class="w-[130px] h-[30px] rounded-[5px] text-[12px] font-extrabold tracking-[0.1em] uppercase transition-all bg-white/20 text-white hover:bg-white/30"
@@ -111,7 +97,7 @@ const goToLogin = () => {
             Login
           </button>
 
-          <!-- Кнопка Register (Активна, біла) -->
+
           <button
             class="w-[130px] h-[30px] rounded-[5px] text-[12px] font-extrabold tracking-[0.1em] uppercase transition-all bg-white text-[#FF5F5F] cursor-default"
           >
@@ -119,12 +105,11 @@ const goToLogin = () => {
           </button>
         </div>
 
-        <!-- ФОРМА РЕЄСТРАЦІЇ -->
         <form
           @submit.prevent="handleRegister"
           class="flex flex-col items-center w-full gap-3 shrink-0"
         >
-          <!-- Username Input -->
+
           <div class="w-full max-w-[280px] flex flex-col">
             <input
               v-model="username"
@@ -138,7 +123,6 @@ const goToLogin = () => {
             </span>
           </div>
 
-          <!-- Password Input -->
           <div class="w-full max-w-[280px] flex flex-col">
             <input
               v-model="password"
@@ -152,7 +136,7 @@ const goToLogin = () => {
             </span>
           </div>
 
-          <!-- Email Input -->
+
           <div class="w-full max-w-[280px] flex flex-col">
             <input
               v-model="email"
@@ -178,11 +162,9 @@ const goToLogin = () => {
           </button>
         </form>
 
-        <!-- Нижній текст -->
         <div class="shrink-0 text-center">
           <p class="text-white text-[10px] tracking-[0.1em] uppercase">
             Already have an account? 
-            <!-- ТУТ ВИКОРИСТАНО font-extrabold ДЛЯ ЖИРНОГО ШРИФТУ -->
             <a href="#"
                @click.prevent="goToLogin"
                class="font-extrabold text-white no-underline hover:underline ml-1"
